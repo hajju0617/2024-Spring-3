@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.boardver3.board.BoardMapper">
+    <insert id="postBoard">
+        INSERT INTO board
+        SET title = #{title},
+            contents = #{contents},
+            writer_id = #{writerId}
+    </insert>
+
+    <select id="getBoard">
+        SELECT board_id AS boardId, title, contents, writer_id AS writerId, hits
+        FROM board
+        WHERE board_id = #{boardId}
+    </select>
+
+    <delete id="deleteBoard">
+        DELETE FROM board
+        WHERE board_id = #{boardId}
+    </delete>
+
+    <update id="putBoard">
+        UPDATE board
+        <set>
+            <if test=" title != null and title != '' ">
+                title = #{title},
+            </if>
+            <if test=" contents != null and contents != '' ">
+                contents = #{contents},
+            </if>
+        </set>
+        WHERE board_id = #{boardId}
+    </update>
+
+    <select id="getBoardOne">
+        SELECT A.board_id AS boardId, A.title, A.contents
+        , A.writer_id AS writerId, B.nm AS writerNm
+        , A.hits, A.created_at AS createdAt
+        FROM board A
+        INNER JOIN user B
+        ON A.writer_id = B.user_id
+        WHERE A.board_id = #{boardId}
+    </select>
+
+    <select id="getBoardList">
+        SELECT A.board_id AS boardId, A.title
+        , A.writer_id AS writerId, B.nm AS writerNm
+        , A.hits, A.created_at AS createdAt
+        FROM board A
+        INNER JOIN user B
+        ON A.writer_id = B.user_id
+        ORDER BY A.board_id DESC
+        LIMIT #{startIdx}, #{len}
+    </select>
+
+</mapper>
