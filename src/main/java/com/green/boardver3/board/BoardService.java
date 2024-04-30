@@ -4,6 +4,7 @@ import com.green.boardver3.board.model.*;
 import com.green.boardver3.comment.CommentMapper;
 import com.green.boardver3.comment.model.CommentGetRes;
 import com.green.boardver3.comment.model.CommentPaging;
+import com.green.boardver3.common.GlobalConst;
 import com.green.boardver3.common.model.Paging;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -35,9 +36,15 @@ public class BoardService {
             // Record 가 있다면 조회수 +1
             mapper.patchBoardHits(boardId);
         }
-        CommentPaging paging = new CommentPaging(1, 5, boardId);
+        CommentPaging paging = new CommentPaging(1, GlobalConst.COMMENT_PAGING_SIZE, boardId);
         List<CommentGetRes> comments = commentMapper.getComments(paging);
         result.setComments(comments);
+
+        if(comments.size() < GlobalConst.COMMENT_PAGING_SIZE) {
+            result.setTotalCommentPage(1);
+        } else {
+            int totalCommentPage = commentMapper.getTotalCommentPage(paging);
+        }
         return result;
     }
     public List<BoardGetRes> getBoardList(Paging p) {

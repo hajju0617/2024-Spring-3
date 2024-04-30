@@ -27,13 +27,19 @@
 
     <select id="getComments">
         SELECT A.comment_id AS commentId, A.contents, A.writer_id AS writerId
-        , A.created_at AS createdAt, B.nm AS writerNm, COUNT(A.comment_id) AS totalComments
+        , A.created_at AS createdAt, B.nm AS writerNm
         FROM comment A
         JOIN user B
         ON A.writer_id = B.user_id
         WHERE A.board_id = #{boardId}
         ORDER BY A.comment_id DESC
         LIMIT #{startIdx}, #{len}
+    </select>
+
+    <select id="getTotalCommentPage">
+        SELECT CEIL COUNT(comment_id) / #{len}
+        FROM comment
+        WHERE board_id = #{boardId}
     </select>
 
 </mapper>

@@ -44,10 +44,15 @@ public class CommentController {
     @GetMapping("getlist")
     public ResultDto<List<CommentGetRes>> getComments(@ModelAttribute CommentPaging p) {
         List<CommentGetRes> list = service.getComments(p);
+        String resultMsg = String.format("row: %d", list.size());
+        if(list.size() > 0 && p.getSize() > list.size()) {
+            resultMsg += String.format(" totalRows: %d", (p.getPage() - 1) * p.getSize() + list.size());
+        }
+
 
         return ResultDto.<List<CommentGetRes>>builder()
                 .statusCode(HttpStatus.OK)
-                .resultMsg(HttpStatus.OK.toString())
+                .resultMsg(resultMsg)
                 .resultData(list).build();
     }
 }
