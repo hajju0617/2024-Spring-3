@@ -1,6 +1,6 @@
 package com.green.boardver3.user;
 
-import com.green.boardver3.common.ResultDto;
+import com.green.boardver3.common.model.ResultDto;
 import com.green.boardver3.user.model.ChangePasswordPatchReq;
 import com.green.boardver3.user.model.SinginPostReq;
 import com.green.boardver3.user.model.UserPostReq;

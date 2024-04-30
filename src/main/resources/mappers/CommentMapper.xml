@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.boardver3.comment.CommentMapper">
+    <insert id="postComment">
+        INSERT INTO comment
+        SET contents = #{contents}
+          , writer_id = #{writerId}
+          , board_id = #{boardId}
+        <!-- 어떤 글(board_id)에 누가 쓴(writer_id) 댓글(contents)-->
+    </insert>
+
+    <delete id="deleteComment">
+        DELETE FROM comment
+        WHERE comment_id = #{commentId}
+        AND writer_id = #{writerId}
+        <!--선택(comment_id) + 삭제할 수 있는 권한(writer_id)-->
+    </delete>
+
+    <update id="putComment">
+        UPDATE comment
+          SET contents = #{contents}
+        WHERE comment_id = #{commentId}
+          AND writer_id = #{writerId}
+    </update>
+
+</mapper>
+

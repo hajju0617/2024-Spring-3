@@ -1,6 +1,7 @@
 package com.green.boardver3.board;
 
 import com.green.boardver3.board.model.*;
+import com.green.boardver3.common.model.Paging;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,10 +25,15 @@ public class BoardService {
         return mapper.putBoard(p);
     }
     public BoardDetailGetRes getBoardOne(long boardId) {
-        return mapper.getBoardOne(boardId);
+//        return mapper.getBoardOne(boardId);
+        BoardDetailGetRes result = mapper.getBoardOne(boardId);
+        if(result != null) {
+            // Record 가 있다면 조회수 +1
+            mapper.patchBoardHits(boardId);
+        }
+        return result;
     }
-    public List<BoardGetRes> getBoardList(BoardGetReq p) {
-        System.out.println("---ssssss----------" + p);
+    public List<BoardGetRes> getBoardList(Paging p) {
         return mapper.getBoardList(p);
     }
 }

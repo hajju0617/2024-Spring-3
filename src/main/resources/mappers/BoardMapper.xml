@@ -55,4 +55,10 @@
         LIMIT #{startIdx}, #{len}
     </select>
 
+    <update id="patchBoardHits">
+        UPDATE board
+        SET hits = hits + 1
+        WHERE board_id = {boardId}
+    </update>
+
 </mapper>
