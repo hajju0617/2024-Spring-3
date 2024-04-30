@@ -1,6 +1,9 @@
 package com.green.boardver3.board;
 
 import com.green.boardver3.board.model.*;
+import com.green.boardver3.comment.CommentMapper;
+import com.green.boardver3.comment.model.CommentGetRes;
+import com.green.boardver3.comment.model.CommentPaging;
 import com.green.boardver3.common.model.Paging;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,6 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardService {
     private final BoardMapper mapper;
+    private final CommentMapper commentMapper;
 
     public int postBoard(BoardPostReq p) {
         return mapper.postBoard(p);
@@ -31,6 +35,9 @@ public class BoardService {
             // Record 가 있다면 조회수 +1
             mapper.patchBoardHits(boardId);
         }
+        CommentPaging paging = new CommentPaging(1, 5, boardId);
+        List<CommentGetRes> comments = commentMapper.getComments(paging);
+        result.setComments(comments);
         return result;
     }
     public List<BoardGetRes> getBoardList(Paging p) {

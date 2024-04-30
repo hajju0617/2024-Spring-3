@@ -1,12 +1,12 @@
 package com.green.boardver3.comment;
 
-import com.green.boardver3.comment.model.CommentDeleteReq;
-import com.green.boardver3.comment.model.CommentPostReq;
-import com.green.boardver3.comment.model.CommentPutReq;
+import com.green.boardver3.comment.model.*;
 import com.green.boardver3.common.model.ResultDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("comment")
@@ -40,5 +40,14 @@ public class CommentController {
                 .statusCode(HttpStatus.OK)
                 .resultMsg(HttpStatus.OK.toString())
                 .resultData(result).build();
+    }
+    @GetMapping("getlist")
+    public ResultDto<List<CommentGetRes>> getComments(@ModelAttribute CommentPaging p) {
+        List<CommentGetRes> list = service.getComments(p);
+
+        return ResultDto.<List<CommentGetRes>>builder()
+                .statusCode(HttpStatus.OK)
+                .resultMsg(HttpStatus.OK.toString())
+                .resultData(list).build();
     }
 }
