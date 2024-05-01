@@ -37,7 +37,7 @@
     </select>
 
     <select id="getTotalCommentPage">
-        SELECT CEIL COUNT(comment_id) / #{len}
+        SELECT CEIL (COUNT(comment_id) / #{len})
         FROM comment
         WHERE board_id = #{boardId}
     </select>

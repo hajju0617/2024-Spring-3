@@ -20,7 +20,9 @@
     <update id="patchPassword">
         UPDATE user
         SET upw = #{newPw}
-        WHERE user_id = #{userId}
+        WHERE user_id = #{userId}     <!-- uid 를 써도 되지만 user_id가 정수값이라 처리속도가 더 빠르다 -->
     </update>
+
+
 
 </mapper>

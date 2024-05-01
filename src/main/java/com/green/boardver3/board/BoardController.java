@@ -3,7 +3,10 @@ package com.green.boardver3.board;
 import com.green.boardver3.board.model.*;
 import com.green.boardver3.common.model.Paging;
 import com.green.boardver3.common.model.ResultDto;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,14 +15,18 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("board")
+@Tag(name = "Board (게시판)", description = "게시판 CRUD")    // 각 기능마다 이름 지정 (name:제목 description:부제목 느낌)
+@Slf4j
 public class BoardController {
     private final BoardService service;
 
     @PostMapping
-    public ResultDto<Integer> postBoard(@RequestBody BoardPostReq p) {
-        int result = service.postBoard(p);
+    @Operation(summary = "게시글 등록", description = "게시글 등록을 할 수 있습니다")    // post 네이밍 지정, 클릭하였을때 어떤 기능을 하는 지 설명
+    public ResultDto<Long> postBoard(@RequestBody BoardPostReq p) {
+        log.info("p의 파라미터: {}", p);     // {} -> System.out.printf(""); 느낌
+        long result = service.postBoard(p);
 
-        return ResultDto.<Integer>builder()
+        return ResultDto.<Long>builder()
                 .statusCode(HttpStatus.OK)
                 .resultMsg("")
                 .resultData(result).build();

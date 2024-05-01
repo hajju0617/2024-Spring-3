@@ -2,9 +2,10 @@ package com.green.boardver3.user;
 
 import com.green.boardver3.common.model.ResultDto;
 import com.green.boardver3.user.model.ChangePasswordPatchReq;
-import com.green.boardver3.user.model.SinginPostReq;
+import com.green.boardver3.user.model.SignInPostReq;
 import com.green.boardver3.user.model.UserPostReq;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("user")
+@Slf4j
 public class UserController {
     private final UserService service;
 
@@ -26,19 +28,9 @@ public class UserController {
                 .resultData(result).build());
     }
     @PostMapping("signin")
-    public ResponseEntity<ResultDto<Integer>> postSignIn(@RequestBody SinginPostReq p) {
-        int result = service.postSignIn(p);
-        // 1 -> 로그인 성공, 2 -> 아이디를 확인해 주세요., 3 -> 비밀번호를 확인해 주세요.
-        String str = switch (result) {
-            case 1 -> "로그인 성공";
-            case 2 -> "아이디를 확인해 주세요";
-            case 3 -> "비밀번호를 확인해 주세요";
-            default -> "Error";
-        };
-        return ResponseEntity.ok(ResultDto.<Integer>builder()
-                .statusCode(HttpStatus.OK)
-                .resultMsg("")
-                .resultData(result).build());
+    public ResultDto<Long> postSignIn(@RequestBody SignInPostReq p) {
+        return service.postSignIn(p);
+
     }
     @PatchMapping("password")
     public ResultDto<Integer> patchPassword(@RequestBody ChangePasswordPatchReq p) {

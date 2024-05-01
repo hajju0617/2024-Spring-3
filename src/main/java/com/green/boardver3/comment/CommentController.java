@@ -45,11 +45,9 @@ public class CommentController {
     public ResultDto<List<CommentGetRes>> getComments(@ModelAttribute CommentPaging p) {
         List<CommentGetRes> list = service.getComments(p);
         String resultMsg = String.format("row: %d", list.size());
-        if(list.size() > 0 && p.getSize() > list.size()) {
+        if(!list.isEmpty() && p.getSize() > list.size()) {
             resultMsg += String.format(" totalRows: %d", (p.getPage() - 1) * p.getSize() + list.size());
         }
-
-
         return ResultDto.<List<CommentGetRes>>builder()
                 .statusCode(HttpStatus.OK)
                 .resultMsg(resultMsg)

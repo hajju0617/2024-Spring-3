@@ -10,5 +10,4 @@ public interface UserMapper {
         int postUser(UserPostReq p);
         UserEntity getUserById(String uid);
         int patchPassword(ChangePasswordPatchReq p);
-
 }

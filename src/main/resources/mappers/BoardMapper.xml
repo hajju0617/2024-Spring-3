@@ -3,18 +3,15 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.green.boardver3.board.BoardMapper">
-    <insert id="postBoard">
+    <!-- INSERT 때 pk값을 받아오는 방법 -->
+    <insert id="postBoard"
+            keyProperty="boardId"
+            useGeneratedKeys="true">
         INSERT INTO board
         SET title = #{title},
             contents = #{contents},
             writer_id = #{writerId}
     </insert>
-
-    <select id="getBoard">
-        SELECT board_id AS boardId, title, contents, writer_id AS writerId, hits
-        FROM board
-        WHERE board_id = #{boardId}
-    </select>
 
     <delete id="deleteBoard">
         DELETE FROM board
@@ -24,7 +21,7 @@
     <update id="putBoard">
         UPDATE board
         <set>
-            <if test=" title != null and title != '' ">
+            <if test=" title != null and title != '' ">     <!-- 사용자가 입력한 값이 없는 게 아니거나 공백이 아닐 경우 title을 수정하겠다-->
                 title = #{title},
             </if>
             <if test=" contents != null and contents != '' ">
@@ -55,10 +52,19 @@
         LIMIT #{startIdx}, #{len}
     </select>
 
-    <update id="patchBoardHits">
+    <update id="pat chBoardHits">
         UPDATE board
         SET hits = hits + 1
-        WHERE board_id = {boardId}
+        WHERE board_id = #{boardId}
     </update>
+
+
+
+
+    <select id="getBoard">
+        SELECT board_id AS boardId, title, contents, writer_id AS writerId, hits
+        FROM board
+        WHERE board_id = #{boardId}
+    </select>
 
 </mapper>
