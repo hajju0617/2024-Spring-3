@@ -10,6 +10,5 @@ public interface CommentMapper {
     int deleteComment(CommentDeleteReq p);
     int putComment(CommentPutReq p);
     List<CommentGetRes> getComments(CommentPaging p);
-
     int getTotalCommentPage(CommentPaging p);
 }

@@ -36,7 +36,7 @@ public class BoardController {
         return service.getBoard(boardId);
     }
     @DeleteMapping
-    public ResultDto<Integer> deleteBoard(@RequestParam(name="board_id") long boardId) {
+    public ResultDto<Integer> deleteBoard(@RequestParam long boardId) {
         int result = service.deleteBoard(boardId);
         return ResultDto.<Integer>builder()
                 .statusCode(HttpStatus.OK)

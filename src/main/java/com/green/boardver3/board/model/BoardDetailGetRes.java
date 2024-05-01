@@ -15,6 +15,7 @@ public class BoardDetailGetRes {
     private String writerNm;
     private int hits;
     private String createdAt;
+
     private List<CommentGetRes> comments;
     private int totalCommentPage;
 }
