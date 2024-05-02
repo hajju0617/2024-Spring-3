@@ -51,6 +51,7 @@ public class BoardController {
                 .resultMsg(HttpStatus.OK.toString())
                 .resultData(result).build();
     }
+
     @GetMapping("{boardId}")   // 주소값에 /board_id값으로 조회 가능  localhost:8080/board/{board_id} ({board_id}에 값을 넣어서 조회)
                                    // {board_id} 값이 long "boardId" 로 들어감.
     public ResultDto<BoardDetailGetRes> getBoardOne(@PathVariable long boardId) {

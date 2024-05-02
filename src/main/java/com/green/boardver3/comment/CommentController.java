@@ -26,6 +26,7 @@ public class CommentController {
     @DeleteMapping
     public ResultDto<Integer> deleteComment(@ModelAttribute CommentDeleteReq p) {
         int result = service.deleteComment(p);
+        //get delete 에서 @Requestbody 처럼 쓰는 게 @ModelAttribute
 
         return ResultDto.<Integer>builder()
                 .statusCode(HttpStatus.OK)
