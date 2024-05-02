@@ -10,5 +10,15 @@ mybatis:
   mapper-locations: mappers/**/*.xml      # resources 아래에 xml 담긴 (mappers) 폴더이름
 
 springdoc:
-  swagger-ui:
-    path: /swagger
+  api-docs:
+    version: openapi_3_1
+  swagger-ui:           # swagger UI 설정
+    path: /swagger    # localhost:8080/swagger 로 접속할 수 있게 설정  (redirect)
+    operations-sorter: method   # alpha (default) : url 기준 정렬, method : http - method 기준 정렬
+    default-model-expand-depth: 10
+    default-models-expand-depth: 10
+    display-request-duration: true   #try it out 을 했을때 request duration(처리 소요시간)을 추가로 찍어줌
+    cache:
+      disabled: true
+
+

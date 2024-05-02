@@ -3,6 +3,7 @@ package com.green.boardver3.comment;
 import com.green.boardver3.comment.model.*;
 import com.green.boardver3.common.model.ResultDto;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,7 +44,7 @@ public class CommentController {
                 .resultData(result).build();
     }
     @GetMapping("getlist")
-    public ResultDto<List<CommentGetRes>> getComments(@ModelAttribute CommentPaging p) {
+    public ResultDto<List<CommentGetRes>> getComments(@ParameterObject @ModelAttribute CommentPaging p) {
         List<CommentGetRes> list = service.getComments(p);
         String resultMsg = String.format("row: %d", list.size());
         if(!list.isEmpty() && p.getSize() > list.size()) {
